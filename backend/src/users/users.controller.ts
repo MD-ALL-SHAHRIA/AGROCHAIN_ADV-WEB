@@ -4,7 +4,7 @@ import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { UpdateProfileDto, ChangePasswordDto } from './dto/update-user.dto';
 
-@ApiTags('User Management 👤')
+@ApiTags('User Management ') 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
