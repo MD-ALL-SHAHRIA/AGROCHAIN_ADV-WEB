@@ -1,0 +1,63 @@
+
+# 📦 1. DEPENDENCIES & PACKAGE MANAGERS
+# --------------------------------------------------------
+node_modules/
+.pnp
+.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 🏗️ 2. NEXT.JS (FRONTEND BUILD ARTIFACTS)
+# --------------------------------------------------------
+.next/
+out/
+build/
+export/
+.vercel/
+
+# 🏭 3. NESTJS (BACKEND BUILD ARTIFACTS)
+# --------------------------------------------------------
+dist/
+.nest/
+tsconfig.tsbuildinfo
+
+# 🧪 4. TESTING & COVERAGE
+# --------------------------------------------------------
+coverage/
+.nyc_output/
+cypress/videos/
+cypress/screenshots/
+
+# 🔐 5. ENVIRONMENT & SECRETS (CRITICAL)
+# --------------------------------------------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+credentials.json
+
+# 🍎 6. SYSTEM FILES (macOS / Windows)
+# --------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+
+# 💻 7. IDE & EDITOR SETTINGS
+# --------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
