@@ -1,10 +1,8 @@
-# ==============================================================================
-#  🌱 AGROCHAIN INFRASTRUCTURE CONFIGURATION (POSTGRES, REDIS & PGADMIN)
-# ==============================================================================
+
 version: '3.8'
 
 services:
-  # 🐘 PostgreSQL Database Engine
+ 
   postgres_db:
     image: postgres:15-alpine
     container_name: agrochain_postgres_container
@@ -18,15 +16,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # 🛑 Redis Cache & BullMQ Queue Engine
+
   redis_cache:
     image: redis:7-alpine
     container_name: agrochain_redis_container
+    command: redis-server --requirepass agro_redis_password
     restart: always
     ports:
-      - "6379:6379"
+      - "6380:6379"
 
-  # 🌐🐘 pgAdmin4 Web GUI Engine (NEW!)
+ 
   pgadmin:
     image: dpage/pgadmin4
     container_name: agrochain_pgadmin_container

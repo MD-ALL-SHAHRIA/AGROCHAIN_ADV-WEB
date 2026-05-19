@@ -7,7 +7,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import * as Joi from 'joi';
 
-
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module'; 
 import { RedisModule } from './redis/redis.module';
@@ -26,10 +25,9 @@ import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
-    
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '../.env',
+      envFilePath: '.env',
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000),
         NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
@@ -40,12 +38,12 @@ import { AdminModule } from './admin/admin.module';
         DB_NAME: Joi.string().required(),
         REDIS_HOST: Joi.string().required(),
         REDIS_PORT: Joi.number().default(6379),
+        REDIS_PASS: Joi.string().optional().allow(''), 
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRES_IN: Joi.string().default('1d'),
       }),
     }),
 
-    
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -58,6 +56,12 @@ import { AdminModule } from './admin/admin.module';
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
         synchronize: true, 
+        ssl: true,
+        extra: {
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        },
       }),
     }),
 
@@ -69,26 +73,23 @@ import { AdminModule } from './admin/admin.module';
         connection: {
           host: configService.get<string>('REDIS_HOST'),
           port: configService.get<number>('REDIS_PORT'),
+          password: configService.get<string>('REDIS_PASS') || undefined,
         },
       }),
     }),
 
-    
     BullModule.registerQueue(
       { name: 'mail-queue' },        
       { name: 'fraud-check-queue' }, 
     ),
 
-   
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads/',
     }),
 
-    
     ScheduleModule.forRoot(), 
 
-    
     AuthModule,
     UsersModule,
     RedisModule,
