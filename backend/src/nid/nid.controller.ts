@@ -31,6 +31,7 @@ export class NidController {
     return this.nidService.getStatus(req.user.id);
   }
 
+  //testing here 
   
   @Get('admin/list')
   @Roles(UserRole.ADMIN)
