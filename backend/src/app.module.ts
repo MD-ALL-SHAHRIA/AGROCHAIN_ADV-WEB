@@ -7,9 +7,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import * as Joi from 'joi';
 
-// 📦 Feature Modules
+
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module'; // 🔥 FIXED: Changed to relative path
+import { UsersModule } from './users/users.module'; 
 import { RedisModule } from './redis/redis.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { OrdersModule } from './orders/orders.module';
@@ -26,7 +26,7 @@ import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
-    // ⚙️ Environment Configuration & Dynamic Validation Schema
+    
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '../.env',
@@ -45,7 +45,7 @@ import { AdminModule } from './admin/admin.module';
       }),
     }),
 
-    // 🐘 TypeORM PostgreSQL Connection Architecture
+    
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -57,7 +57,7 @@ import { AdminModule } from './admin/admin.module';
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
-        synchronize: true, // ⚠️ ডেভেলপমেন্টের জন্য ট্রু, পরবর্তীতে আমরা মাইগ্রেশনে শিফট করব
+        synchronize: true, 
       }),
     }),
 
@@ -73,22 +73,22 @@ import { AdminModule } from './admin/admin.module';
       }),
     }),
 
-    // 📬 Registering Global Message Queues
+    
     BullModule.registerQueue(
-      { name: 'mail-queue' },        // 📧 Handle async fire-and-forget emails
-      { name: 'fraud-check-queue' }, // 🤖 Handle background AI transaction scoring
+      { name: 'mail-queue' },        
+      { name: 'fraud-check-queue' }, 
     ),
 
-    // 📂 Serve uploaded files publicly under '/uploads' route
+   
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads/',
     }),
 
-    // ⏰ Enable NestJS Scheduler for cron jobs and periodic tasks
+    
     ScheduleModule.forRoot(), 
 
-    // 🚀 Application Core Modules
+    
     AuthModule,
     UsersModule,
     RedisModule,
@@ -99,7 +99,7 @@ import { AdminModule } from './admin/admin.module';
     DisputesModule,
     SchedulerModule,
     MailModule,
-    UploadsModule, // 🔥 FIXED: Removed the duplicate entry
+    UploadsModule, 
     NidModule,
     LogisticsModule,
     FraudModule,

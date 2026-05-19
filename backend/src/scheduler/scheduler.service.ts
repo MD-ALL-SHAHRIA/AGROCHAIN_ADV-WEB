@@ -8,7 +8,7 @@ import { Order, OrderStatus } from '../orders/entities/order.entity';
 
 @Injectable()
 export class SchedulerService {
-  private readonly logger = new Logger('AutoPilotEngine 🤖');
+  private readonly logger = new Logger('AutoPilotEngine ');
 
   constructor(
     @InjectRepository(Order) private readonly orderRepo: Repository<Order>,
