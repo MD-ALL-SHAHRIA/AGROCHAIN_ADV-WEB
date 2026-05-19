@@ -33,7 +33,7 @@ cypress/screenshots/
 
 # 🔐 5. ENVIRONMENT & SECRETS (CRITICAL)
 # --------------------------------------------------------
-.env
+# .env
 .env.local
 .env.development.local
 .env.test.local
