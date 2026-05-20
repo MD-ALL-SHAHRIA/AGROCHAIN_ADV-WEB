@@ -1,3 +1,5 @@
+
+
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bullmq';
@@ -12,7 +14,7 @@ export class MailWorker extends WorkerHost {
   }
 
   async process(job: Job<any, any, string>): Promise<any> {
-    this.logger.debug(`Picked up job [${job.name}] with ID: ${job.id}`);
+    this.logger.debug(`✨ Picked up job [${job.name}] with ID: ${job.id}`);
 
     try {
       switch (job.name) {
@@ -32,15 +34,24 @@ export class MailWorker extends WorkerHost {
           );
           break;
 
+       
+        case 'forgot-password':
+          this.logger.debug(`Processing password reset for ${job.data.email}... ⏳`);
+          await this.mailService.sendPasswordResetEmail(
+            job.data.email,
+            job.data.otp,
+          );
+          break;
+
         default:
-          this.logger.warn(`Unknown job type: ${job.name}`);
+          this.logger.warn(`⚠️ Unknown job type: ${job.name}`);
       }
 
-      this.logger.debug(`Job [${job.name}] completed successfully!`);
+      this.logger.debug(`✅ Job [${job.name}] completed successfully!`);
       return { success: true };
     } catch (error) {
       this.logger.error(
-        `Job [${job.name}] failed. BullMQ will retry based on settings.`,
+        `🚨 Job [${job.name}] failed. BullMQ will retry based on settings.`,
         error.stack,
       );
       throw error;

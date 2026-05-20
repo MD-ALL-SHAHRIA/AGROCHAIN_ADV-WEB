@@ -33,7 +33,8 @@ export class InventoryController {
     return this.inventoryService.create(createInventoryDto, req.user);
   }
 
-  @Get('market')
+
+  @Get()
   @ApiOperation({ summary: 'Public live market feed (Cached response 60s)' })
   getMarketFeed(@Query() query: any) {
     return this.inventoryService.getMarketFeed(query);

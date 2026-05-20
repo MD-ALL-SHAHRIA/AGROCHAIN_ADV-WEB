@@ -6,13 +6,21 @@ export const baseApi = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1',
     prepareHeaders: (headers, { getState }) => {
       
-      const token = (getState() as any).auth?.token || localStorage.getItem('token');
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
+      let token = (getState() as any).auth?.token;
+
+     
+      if (!token && typeof window !== 'undefined') {
+        token = localStorage.getItem('token');
       }
+
+     
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      
       return headers;
     },
   }),
-  tagTypes: ['User', 'Order', 'Inventory', 'Fraud', 'Dispute'], 
+  tagTypes: ['User', 'Inventory', 'Order', 'Fraud', 'Dispute'],
   endpoints: () => ({}),
 });
